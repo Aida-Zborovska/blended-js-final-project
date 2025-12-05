@@ -1,5 +1,11 @@
 import { STATE } from './constants';
 import {
+  clearProductsList,
+  hideNotFoundBlock,
+  showNotFoundBlock,
+  updateActiveCategory,
+} from './helpers';
+import {
   getCategories,
   getAllProducts,
   getProductsByCategory,
@@ -27,7 +33,9 @@ export async function handleCategoryClick(e) {
   if (!btnEl) {
     return;
   }
-  btnEl.classList.add('categories__btn--active');
+  clearProductsList();
+  updateActiveCategory(btnEl);
+  hideNotFoundBlock();
   STATE.PAGE = 1;
   const query = btnEl.textContent;
   if (query === 'All') {
@@ -42,7 +50,7 @@ export async function handleCategoryClick(e) {
     try {
       const products = await getProductsByCategory(STATE.QUERY, STATE.PAGE);
       if (products.length === 0) {
-        refs.notFoundBox.classList.add('not-found--visible');
+        showNotFoundBlock();
       } else {
         renderProducts(products);
       }
