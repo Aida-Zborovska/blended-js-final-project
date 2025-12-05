@@ -33,5 +33,5 @@ export function renderProducts({ products }) {
  </li>`
     )
     .join('');
-  refs.productsList.innerHTML = markup;
+  refs.productsList.insertAdjacentHTML('beforeend', markup);
 }
