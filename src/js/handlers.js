@@ -21,7 +21,7 @@ export async function initHomePage() {
     console.error(`Get categories error: ${err}`);
   }
   try {
-    const products = await getAllProducts(STATE.PAGE);
+    const { products } = await getAllProducts(STATE.PAGE);
     renderProducts(products);
   } catch (err) {
     console.error(`Get products error: ${err}`);
@@ -40,7 +40,7 @@ export async function handleCategoryClick(e) {
   const query = btnEl.textContent;
   if (query === 'All') {
     try {
-      const products = await getAllProducts(STATE.PAGE);
+      const { products } = await getAllProducts(STATE.PAGE);
       renderProducts(products);
     } catch (err) {
       console.error(`Get products error: ${err}`);
@@ -48,7 +48,7 @@ export async function handleCategoryClick(e) {
   } else {
     STATE.QUERY = query;
     try {
-      const products = await getProductsByCategory(STATE.QUERY, STATE.PAGE);
+      const { products } = await getProductsByCategory(STATE.QUERY, STATE.PAGE);
       if (products.length === 0) {
         showNotFoundBlock();
       } else {

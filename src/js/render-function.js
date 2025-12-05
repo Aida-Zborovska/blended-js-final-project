@@ -13,7 +13,7 @@ export function renderCategories(categories) {
   refs.categoriesList.innerHTML = markup;
 }
 
-export function renderProducts({ products }) {
+export function renderProducts(products) {
   const markup = products
     .map(
       ({
