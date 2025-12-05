@@ -1,10 +1,10 @@
-import"./assets/styles-DAE99nJD.js";import{a as r}from"./assets/vendor-2s9xPmg-.js";const l="https://dummyjson.com",c={CATEGORIES:"products/category-list",PRODUCTS:"products"},_=12;r.defaults.baseURL=l;async function g(){return(await r.get(c.CATEGORIES)).data}async function m(t){const s=(t-1)*12;return(await r.get(`${c.PRODUCTS}?limit=${_}&skip=${s}`)).data}const a={categoriesList:document.querySelector("ul.categories"),productsList:document.querySelector("ul.products")};function $(t){const e=["All",...t].map(o=>`<li class="categories__item">
+import"./assets/styles-DAE99nJD.js";import{a as n}from"./assets/vendor-2s9xPmg-.js";const y="https://dummyjson.com",i={CATEGORIES:"products/category-list",PRODUCTS:"products",CATEGORY:"products/category/"},d=12,r={QUERY:"",PAGE:1},c={categoriesList:document.querySelector("ul.categories"),productsList:document.querySelector("ul.products"),notFoundBlock:document.querySelector("div.not-found")};function E(){c.productsList.innerHTML=""}function f(t){const e=document.querySelector(".categories__btn--active");e&&e.classList.remove("categories__btn--active"),t.classList.add("categories__btn--active")}function L(){c.notFoundBlock.classList.add("not-found--visible")}function A(){c.notFoundBlock.classList.remove("not-found--visible")}n.defaults.baseURL=y;async function $(){return(await n.get(i.CATEGORIES)).data}async function u(t){const e=(t-1)*12;return(await n.get(`${i.PRODUCTS}?limit=${d}&skip=${e}`)).data}async function P(t,e){const s=(e-1)*12;return(await n.get(`${i.CATEGORY}${t}?limit=${d}&skip=${s}`)).data}function b(t){const s=["All",...t].map(o=>`<li class="categories__item">
       <button class="categories__btn" type="button">${o}</button>
-    </li>`).join("");a.categoriesList.innerHTML=e}function y({products:t}){const s=t.map(({id:e,thumbnail:o,description:n,title:i,brand:p,category:u,price:d})=>`<li class="products__item" data-id="${e}">
-    <img class="products__image" src="${o}" alt="${n}"/>
-    <p class="products__title">${i}</p>
-    <p class="products__brand"><span class="products__brand--bold">Brand:</span></p>${p}
-    <p class="products__category">Category: ${u}</p>
-    <p class="products__price">Price: ${d}$</p>
- </li>`).join("");a.productsList.innerHTML=s}async function L(){try{const t=await g();$(t)}catch(t){console.error(`Get categories error: ${t}`)}try{const t=await m(1);y(t)}catch(t){console.error(`Get products error: ${t}`)}}document.addEventListener("DOMContentLoaded",L);
+    </li>`).join("");c.categoriesList.innerHTML=s}function a({products:t}){const e=t.map(({id:s,thumbnail:o,description:l,title:p,brand:g,category:_,price:m})=>`<li class="products__item" data-id="${s}">
+    <img class="products__image" src="${o}" alt="${l}"/>
+    <p class="products__title">${p}</p>
+    <p class="products__brand"><span class="products__brand--bold">Brand:</span></p>${g}
+    <p class="products__category">Category: ${_}</p>
+    <p class="products__price">Price: ${m}$</p>
+ </li>`).join("");c.productsList.insertAdjacentHTML("beforeend",e)}async function C(){try{const t=await $();b(t)}catch(t){console.error(`Get categories error: ${t}`)}try{const t=await u(r.PAGE);a(t)}catch(t){console.error(`Get products error: ${t}`)}}async function G(t){const e=t.target.closest(".categories__btn");if(!e)return;E(),f(e),A(),r.PAGE=1;const s=e.textContent;if(s==="All")try{const o=await u(r.PAGE);a(o)}catch(o){console.error(`Get products error: ${o}`)}else{r.QUERY=s;try{const o=await P(r.QUERY,r.PAGE);o.length===0?L():a(o)}catch(o){console.error(`Get products error: ${o}`)}}}document.addEventListener("DOMContentLoaded",C);c.categoriesList.addEventListener("click",G);
 //# sourceMappingURL=index.js.map
