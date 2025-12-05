@@ -8,10 +8,18 @@ export async function getCategories() {
   return response.data;
 }
 
-export async function getProducts(page) {
+export async function getAllProducts(page) {
   const skip = (page - 1) * 12;
   const response = await axios.get(
     `${API_ENDPOINTS.PRODUCTS}?limit=${PER_PAGE}&skip=${skip}`
+  );
+  return response.data;
+}
+
+export async function getProductsByCategory(query, page) {
+  const skip = (page - 1) * 12;
+  const response = await axios.get(
+    `${API_ENDPOINTS.CATEGORY}${query}?limit=${PER_PAGE}&skip=${skip}`
   );
   return response.data;
 }

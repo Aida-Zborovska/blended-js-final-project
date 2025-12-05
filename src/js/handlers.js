@@ -1,4 +1,10 @@
-import { getCategories, getProducts } from './products-api';
+import { STATE } from './constants';
+import {
+  getCategories,
+  getAllProducts,
+  getProductsByCategory,
+} from './products-api';
+import { refs } from './refs';
 import { renderCategories, renderProducts } from './render-function';
 
 export async function initHomePage() {
@@ -9,9 +15,39 @@ export async function initHomePage() {
     console.error(`Get categories error: ${err}`);
   }
   try {
-    const products = await getProducts(1);
+    const products = await getAllProducts(STATE.PAGE);
     renderProducts(products);
   } catch (err) {
     console.error(`Get products error: ${err}`);
+  }
+}
+
+export async function handleCategoryClick(e) {
+  const btnEl = e.target.closest('.categories__btn');
+  if (!btnEl) {
+    return;
+  }
+  btnEl.classList.add('categories__btn--active');
+  STATE.PAGE = 1;
+  const query = btnEl.textContent;
+  if (query === 'All') {
+    try {
+      const products = await getAllProducts(STATE.PAGE);
+      renderProducts(products);
+    } catch (err) {
+      console.error(`Get products error: ${err}`);
+    }
+  } else {
+    STATE.QUERY = query;
+    try {
+      const products = await getProductsByCategory(STATE.QUERY, STATE.PAGE);
+      if (products.length === 0) {
+        refs.notFoundBox.classList.add('not-found--visible');
+      } else {
+        renderProducts(products);
+      }
+    } catch (err) {
+      console.error(`Get products error: ${err}`);
+    }
   }
 }
