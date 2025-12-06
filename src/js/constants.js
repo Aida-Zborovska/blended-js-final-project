@@ -6,6 +6,6 @@ export const API_ENDPOINTS = {
 };
 export const PER_PAGE = 12;
 export const STATE = {
-  QUERY: '',
+  QUERY: 'All',
   PAGE: 1,
 };

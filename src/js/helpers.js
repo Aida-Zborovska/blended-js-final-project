@@ -1,5 +1,7 @@
 import { PER_PAGE, STATE } from './constants';
+import { getProducts } from './products-api';
 import { refs } from './refs';
+import { renderProducts } from './render-function';
 
 export function clearProductsList() {
   refs.productsList.innerHTML = '';
@@ -11,6 +13,20 @@ export function updateActiveCategory(activeEl) {
     oldActiveEl.classList.remove('categories__btn--active');
   }
   activeEl.classList.add('categories__btn--active');
+}
+
+export async function loadProducts() {
+  try {
+    const { products, total } = await getProducts();
+    if (products.length === 0) {
+      showNotFoundBlock();
+    } else {
+      renderProducts(products);
+      canLoadMore(total);
+    }
+  } catch (err) {
+    console.error(`Get products error: ${err}`);
+  }
 }
 
 export function showNotFoundBlock() {

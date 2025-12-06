@@ -1,24 +1,13 @@
-import { API_ENDPOINTS, STATE } from './constants';
+import { STATE } from './constants';
 import {
-  canLoadMore,
   clearProductsList,
   hideNotFoundBlock,
-  showNotFoundBlock,
+  loadProducts,
   updateActiveCategory,
 } from './helpers';
 import { openModal } from './modal';
-import {
-  getCategories,
-  getAllProducts,
-  getProductsByCategory,
-  getProductById,
-} from './products-api';
-import { refs } from './refs';
-import {
-  renderCategories,
-  renderProduct,
-  renderProducts,
-} from './render-function';
+import { getCategories, getProductById } from './products-api';
+import { renderCategories, renderProduct } from './render-function';
 
 export async function initHomePage() {
   try {
@@ -27,13 +16,7 @@ export async function initHomePage() {
   } catch (err) {
     console.error(`Get categories error: ${err}`);
   }
-  try {
-    const { products, total } = await getAllProducts(STATE.PAGE);
-    renderProducts(products);
-    canLoadMore(total);
-  } catch (err) {
-    console.error(`Get products error: ${err}`);
-  }
+  await loadProducts();
 }
 
 export async function handleCategoryClick(e) {
@@ -45,32 +28,8 @@ export async function handleCategoryClick(e) {
   updateActiveCategory(btnElem);
   hideNotFoundBlock();
   STATE.PAGE = 1;
-  const query = btnElem.textContent;
-  if (query === 'All') {
-    try {
-      const { products, total } = await getAllProducts(STATE.PAGE);
-      renderProducts(products);
-      canLoadMore(total);
-    } catch (err) {
-      console.error(`Get products error: ${err}`);
-    }
-  } else {
-    STATE.QUERY = query;
-    try {
-      const { products, total } = await getProductsByCategory(
-        STATE.QUERY,
-        STATE.PAGE
-      );
-      if (products.length === 0) {
-        showNotFoundBlock();
-      } else {
-        renderProducts(products);
-        canLoadMore(total);
-      }
-    } catch (err) {
-      console.error(`Get products error: ${err}`);
-    }
-  }
+  STATE.QUERY = btnElem.textContent;
+  await loadProducts();
 }
 
 export async function handleProductClick(e) {
@@ -90,4 +49,5 @@ export async function handleProductClick(e) {
 
 export async function handleLoadMore() {
   STATE.PAGE += 1;
+  await loadProducts();
 }
