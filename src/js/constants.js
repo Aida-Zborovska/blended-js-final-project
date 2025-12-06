@@ -5,8 +5,7 @@ export const API_ENDPOINTS = {
   CATEGORY: 'products/category/',
 };
 export const PER_PAGE = 12;
-export let PAGE = 1;
 export const STATE = {
-  QUERY: '',
+  QUERY: 'All',
   PAGE: 1,
 };
