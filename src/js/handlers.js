@@ -1,17 +1,23 @@
-import { STATE } from './constants';
+import { API_ENDPOINTS, STATE } from './constants';
 import {
   clearProductsList,
   hideNotFoundBlock,
   showNotFoundBlock,
   updateActiveCategory,
 } from './helpers';
+import { openModal } from './modal';
 import {
   getCategories,
   getAllProducts,
   getProductsByCategory,
+  getProductById,
 } from './products-api';
 import { refs } from './refs';
-import { renderCategories, renderProducts } from './render-function';
+import {
+  renderCategories,
+  renderProduct,
+  renderProducts,
+} from './render-function';
 
 export async function initHomePage() {
   try {
@@ -29,15 +35,15 @@ export async function initHomePage() {
 }
 
 export async function handleCategoryClick(e) {
-  const btnEl = e.target.closest('.categories__btn');
-  if (!btnEl) {
+  const btnElem = e.target.closest('.categories__btn');
+  if (!btnElem) {
     return;
   }
   clearProductsList();
-  updateActiveCategory(btnEl);
+  updateActiveCategory(btnElem);
   hideNotFoundBlock();
   STATE.PAGE = 1;
-  const query = btnEl.textContent;
+  const query = btnElem.textContent;
   if (query === 'All') {
     try {
       const { products } = await getAllProducts(STATE.PAGE);
@@ -57,5 +63,20 @@ export async function handleCategoryClick(e) {
     } catch (err) {
       console.error(`Get products error: ${err}`);
     }
+  }
+}
+
+export async function handleProductClick(e) {
+  const liElem = e.target.closest('li.products__item');
+  if (!liElem) {
+    return;
+  }
+  const id = liElem.dataset.id;
+  try {
+    const product = await getProductById(id);
+    renderProduct(product);
+    openModal();
+  } catch (err) {
+    console.error(`Get product error: ${err}`);
   }
 }
