@@ -5,4 +5,5 @@ export const refs = {
   modal: document.querySelector('div.modal'),
   modalProduct: document.querySelector('div.modal-product'),
   closeModalBtn: document.querySelector('.modal__close-btn'),
+  loadMoreBtn: document.querySelector('.load-more-btn'),
 };

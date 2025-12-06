@@ -1,3 +1,4 @@
+import { PER_PAGE, STATE } from './constants';
 import { refs } from './refs';
 
 export function clearProductsList() {
@@ -18,4 +19,13 @@ export function showNotFoundBlock() {
 
 export function hideNotFoundBlock() {
   refs.notFoundBlock.classList.remove('not-found--visible');
+}
+
+export function canLoadMore(totalItems) {
+  const totalPages = Math.ceil(totalItems / PER_PAGE);
+  if (totalPages > STATE.PAGE) {
+    refs.loadMoreBtn.classList.remove('is-hidden');
+  } else {
+    refs.loadMoreBtn.classList.add('is-hidden');
+  }
 }

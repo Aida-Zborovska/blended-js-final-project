@@ -1,5 +1,6 @@
 import { API_ENDPOINTS, STATE } from './constants';
 import {
+  canLoadMore,
   clearProductsList,
   hideNotFoundBlock,
   showNotFoundBlock,
@@ -27,8 +28,9 @@ export async function initHomePage() {
     console.error(`Get categories error: ${err}`);
   }
   try {
-    const { products } = await getAllProducts(STATE.PAGE);
+    const { products, total } = await getAllProducts(STATE.PAGE);
     renderProducts(products);
+    canLoadMore(total);
   } catch (err) {
     console.error(`Get products error: ${err}`);
   }
@@ -46,19 +48,24 @@ export async function handleCategoryClick(e) {
   const query = btnElem.textContent;
   if (query === 'All') {
     try {
-      const { products } = await getAllProducts(STATE.PAGE);
+      const { products, total } = await getAllProducts(STATE.PAGE);
       renderProducts(products);
+      canLoadMore(total);
     } catch (err) {
       console.error(`Get products error: ${err}`);
     }
   } else {
     STATE.QUERY = query;
     try {
-      const { products } = await getProductsByCategory(STATE.QUERY, STATE.PAGE);
+      const { products, total } = await getProductsByCategory(
+        STATE.QUERY,
+        STATE.PAGE
+      );
       if (products.length === 0) {
         showNotFoundBlock();
       } else {
         renderProducts(products);
+        canLoadMore(total);
       }
     } catch (err) {
       console.error(`Get products error: ${err}`);
@@ -79,4 +86,8 @@ export async function handleProductClick(e) {
   } catch (err) {
     console.error(`Get product error: ${err}`);
   }
+}
+
+export async function handleLoadMore() {
+  STATE.PAGE += 1;
 }

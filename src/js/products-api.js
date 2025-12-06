@@ -9,7 +9,7 @@ export async function getCategories() {
 }
 
 export async function getAllProducts(page) {
-  const skip = (page - 1) * 12;
+  const skip = (page - 1) * PER_PAGE;
   const response = await axios.get(
     `${API_ENDPOINTS.PRODUCTS}?limit=${PER_PAGE}&skip=${skip}`
   );
@@ -17,7 +17,7 @@ export async function getAllProducts(page) {
 }
 
 export async function getProductsByCategory(query, page) {
-  const skip = (page - 1) * 12;
+  const skip = (page - 1) * PER_PAGE;
   const response = await axios.get(
     `${API_ENDPOINTS.CATEGORY}${query}?limit=${PER_PAGE}&skip=${skip}`
   );
