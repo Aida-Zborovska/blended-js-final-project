@@ -1,7 +1,9 @@
 import {
   handleCategoryClick,
+  handleClearSearchForm,
   handleLoadMore,
   handleProductClick,
+  handleSearchForm,
   initHomePage,
 } from './js/handlers';
 import { closeModal } from './js/modal';
@@ -12,3 +14,5 @@ refs.categoriesList.addEventListener('click', handleCategoryClick);
 refs.productsList.addEventListener('click', handleProductClick);
 refs.closeModalBtn.addEventListener('click', closeModal);
 refs.loadMoreBtn.addEventListener('click', handleLoadMore);
+refs.searhForm.addEventListener('submit', handleSearchForm);
+refs.clearSearchFormBtn.addEventListener('click', handleClearSearchForm);

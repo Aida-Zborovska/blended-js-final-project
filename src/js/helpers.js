@@ -12,7 +12,9 @@ export function updateActiveCategory(activeEl) {
   if (oldActiveEl) {
     oldActiveEl.classList.remove('categories__btn--active');
   }
-  activeEl.classList.add('categories__btn--active');
+  if (activeEl) {
+    activeEl.classList.add('categories__btn--active');
+  }
 }
 
 export async function loadProducts() {

@@ -24,3 +24,11 @@ export async function getProductById(id) {
   const response = await axios.get(`${API_ENDPOINTS.PRODUCTS}/${id}`);
   return response.data;
 }
+
+export async function searchProducts() {
+  const skip = (STATE.PAGE - 1) * PER_PAGE;
+  const response = await axios.get(
+    `${API_ENDPOINTS.SEARCH}?q=${STATE.QUERY}&limit=${PER_PAGE}&skip=${skip}`
+  );
+  return response.data;
+}
