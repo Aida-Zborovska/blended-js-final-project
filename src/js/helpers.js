@@ -12,8 +12,13 @@ export function updateActiveCategory(activeEl) {
   if (oldActiveEl) {
     oldActiveEl.classList.remove('categories__btn--active');
   }
-  if (activeEl) {
-    activeEl.classList.add('categories__btn--active');
+  activeEl.classList.add('categories__btn--active');
+}
+
+export function clearActiveCategory() {
+  const oldActiveEl = document.querySelector('.categories__btn--active');
+  if (oldActiveEl) {
+    oldActiveEl.classList.remove('categories__btn--active');
   }
 }
 
@@ -46,4 +51,8 @@ export function canLoadMore(totalItems) {
   } else {
     refs.loadMoreBtn.classList.add('is-hidden');
   }
+}
+
+export function hideLoadMore() {
+  refs.loadMoreBtn.classList.add('is-hidden');
 }

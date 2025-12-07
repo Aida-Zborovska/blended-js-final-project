@@ -1,7 +1,9 @@
 import { STATE } from './constants';
 import {
   canLoadMore,
+  clearActiveCategory,
   clearProductsList,
+  hideLoadMore,
   hideNotFoundBlock,
   loadProducts,
   showNotFoundBlock,
@@ -34,6 +36,7 @@ export async function handleCategoryClick(e) {
   clearProductsList();
   updateActiveCategory(btnElem);
   hideNotFoundBlock();
+  hideLoadMore();
   STATE.PAGE = 1;
   STATE.QUERY = btnElem.textContent;
   await loadProducts();
@@ -64,7 +67,8 @@ export async function handleSearchForm(e) {
   }
   clearProductsList();
   hideNotFoundBlock();
-  updateActiveCategory();
+  clearActiveCategory();
+  hideLoadMore();
   STATE.QUERY = queryCandidate;
   STATE.PAGE = 1;
   try {
