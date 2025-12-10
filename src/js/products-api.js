@@ -8,27 +8,31 @@ export async function getCategories() {
   return response.data;
 }
 
-export async function getProducts() {
+export async function getAllProducts() {
   const skip = (STATE.PAGE - 1) * PER_PAGE;
-  let head;
-  if (STATE.QUERY === 'All') {
-    head = API_ENDPOINTS.PRODUCTS;
-  } else {
-    head = `${API_ENDPOINTS.CATEGORY}${STATE.QUERY}`;
-  }
-  const response = await axios.get(`${head}?limit=${PER_PAGE}&skip=${skip}`);
+  const response = await axios.get(
+    `${API_ENDPOINTS.PRODUCTS}?limit=${PER_PAGE}&skip=${skip}`
+  );
+  return response.data;
+}
+
+export async function getProductsByCategory() {
+  const skip = (STATE.PAGE - 1) * PER_PAGE;
+  const response = await axios.get(
+    `${API_ENDPOINTS.CATEGORY}${STATE.QUERY}?limit=${PER_PAGE}&skip=${skip}`
+  );
+  return response.data;
+}
+
+export async function getProductsBySearch() {
+  const skip = (STATE.PAGE - 1) * PER_PAGE;
+  const response = await axios.get(
+    `${API_ENDPOINTS.SEARCH}?q=${STATE.QUERY}&limit=${PER_PAGE}&skip=${skip}`
+  );
   return response.data;
 }
 
 export async function getProductById(id) {
   const response = await axios.get(`${API_ENDPOINTS.PRODUCTS}/${id}`);
-  return response.data;
-}
-
-export async function searchProducts() {
-  const skip = (STATE.PAGE - 1) * PER_PAGE;
-  const response = await axios.get(
-    `${API_ENDPOINTS.SEARCH}?q=${STATE.QUERY}&limit=${PER_PAGE}&skip=${skip}`
-  );
   return response.data;
 }

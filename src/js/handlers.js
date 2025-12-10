@@ -1,22 +1,16 @@
 import { STATE } from './constants';
 import {
-  canLoadMore,
   clearActiveCategory,
   clearProductsList,
   hideLoadMore,
   hideNotFoundBlock,
   loadProducts,
-  showNotFoundBlock,
   updateActiveCategory,
 } from './helpers';
+import { getCategories, getProductById } from './products-api';
 import { openModal } from './modal';
-import { getCategories, getProductById, searchProducts } from './products-api';
 import { refs } from './refs';
-import {
-  renderCategories,
-  renderProduct,
-  renderProducts,
-} from './render-function';
+import { renderCategories, renderProduct } from './render-function';
 
 export async function initHomePage() {
   try {
@@ -33,12 +27,13 @@ export async function handleCategoryClick(e) {
   if (!btnElem) {
     return;
   }
-  clearProductsList();
-  updateActiveCategory(btnElem);
-  hideNotFoundBlock();
-  hideLoadMore();
   STATE.PAGE = 1;
   STATE.QUERY = btnElem.textContent;
+  STATE.QUERY === 'All' ? (STATE.FLAG = 'All') : (STATE.FLAG = 'Category');
+  updateActiveCategory(btnElem);
+  clearProductsList();
+  hideNotFoundBlock();
+  hideLoadMore();
   await loadProducts();
 }
 
@@ -65,33 +60,24 @@ export async function handleSearchForm(e) {
     alert('type something');
     return;
   }
+  clearActiveCategory();
   clearProductsList();
   hideNotFoundBlock();
-  clearActiveCategory();
   hideLoadMore();
   STATE.QUERY = queryCandidate;
   STATE.PAGE = 1;
-  try {
-    const { products, total } = await searchProducts();
-    if (products.length === 0) {
-      showNotFoundBlock();
-    } else {
-      renderProducts(products);
-      canLoadMore(total);
-    }
-  } catch (err) {
-    console.error(`Get product error: ${err}`);
-  }
-  e.target.reset();
+  STATE.FLAG = 'Search';
+  loadProducts();
 }
 
 export async function handleClearSearchForm() {
-  refs.searhForm.reset();
+  refs.searchForm.reset();
   STATE.QUERY = 'All';
   STATE.PAGE = 1;
+  STATE.FLAG = 'All';
   clearProductsList();
   hideNotFoundBlock();
-  updateActiveCategory();
+  clearActiveCategory();
   await loadProducts();
 }
 

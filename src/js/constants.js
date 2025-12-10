@@ -9,4 +9,5 @@ export const PER_PAGE = 12;
 export const STATE = {
   QUERY: 'All',
   PAGE: 1,
+  FLAG: 'All', //"All", "Category", "Search"
 };
