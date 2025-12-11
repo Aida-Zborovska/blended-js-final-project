@@ -10,4 +10,9 @@ export const STATE = {
   QUERY: 'All',
   PAGE: 1,
   FLAG: 'All', //"All", "Category", "Search"
+  ID: 1,
+};
+export const COUNTER = {
+  cart: 0,
+  wishlist: 0,
 };

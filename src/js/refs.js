@@ -8,4 +8,6 @@ export const refs = {
   loadMoreBtn: document.querySelector('.load-more-btn'),
   searchForm: document.querySelector('.search-form'),
   clearSearchFormBtn: document.querySelector('.search-form__btn-clear'),
+  addToCardBtn: document.querySelector('.modal-product__btn--cart'),
+  addToWishlistBtn: document.querySelector('.modal-product__btn--wishlist'),
 };

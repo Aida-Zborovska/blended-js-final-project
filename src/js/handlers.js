@@ -46,10 +46,10 @@ export async function handleProductClick(e) {
   try {
     const product = await getProductById(id);
     renderProduct(product);
-    openModal();
   } catch (err) {
     console.error(`Get product error: ${err}`);
   }
+  openModal();
 }
 
 export async function handleSearchForm(e) {
