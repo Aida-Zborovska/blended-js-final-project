@@ -11,6 +11,7 @@ export const STATE = {
   PAGE: 1,
   FLAG: 'All', //"All", "Category", "Search"
   ID: 1,
+  CLOSE_MODAL_CALLBACK: undefined,
 };
 export const COUNTER = {
   cart: 0,

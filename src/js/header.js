@@ -10,13 +10,13 @@ export function initHeader() {
 export function updateHeaderCounterCart() {
   const cartItems = loadFromLS(STORAGE_KEY.cart);
   COUNTER.cart = cartItems.length;
-  refs.cartCounter.textContent = COUNTER.cart;
+  refs.headerCartCounter.textContent = COUNTER.cart;
 }
 
 export function updateHeaderCounterWishlist() {
   const wishlistItems = loadFromLS(STORAGE_KEY.wishlist);
   COUNTER.wishlist = wishlistItems.length;
-  refs.wishlistCounter.textContent = COUNTER.wishlist;
+  refs.headerWishlistCounter.textContent = COUNTER.wishlist;
 }
 
 export function toggleTheme() {

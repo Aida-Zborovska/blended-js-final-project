@@ -88,5 +88,13 @@ export async function loadAllProductsFromLS(key) {
   const allProducts = allPromises
     .filter(promis => promis.status === 'fulfilled')
     .map(promis => promis.value);
-  renderProducts(allProducts);
+  return allProducts;
+}
+
+export function refreshCart(products) {
+  const amount = products.length;
+  refs.cartCounter.textContent = amount;
+  let price = 0;
+  products.map(product => (price += product.price));
+  refs.cartPriceCounter.textContent = `$${price.toFixed(2)}`;
 }

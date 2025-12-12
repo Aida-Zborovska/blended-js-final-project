@@ -33,6 +33,7 @@ export function closeModal() {
   document.body.style.overflow = '';
   window.removeEventListener('keydown', handleEscapePress);
   refs.modal.removeEventListener('click', hanleBackdroppClick);
+  STATE.CLOSE_MODAL_CALLBACK && STATE.CLOSE_MODAL_CALLBACK();
 }
 
 function handleCartBtnClick(e) {
