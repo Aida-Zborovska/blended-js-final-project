@@ -1,1 +1,1 @@
-{"version":3,"file":"wishlist.js","sources":[],"sourcesContent":[],"names":[],"mappings":""}
+{"version":3,"file":"wishlist.js","sources":["../src/wishlist.js"],"sourcesContent":["import { toggleTheme } from './js/header';\n\nrefs.themeToggleBtn.addEventListener('click', toggleTheme);\n"],"names":["toggleTheme"],"mappings":"gDAEA,KAAK,eAAe,iBAAiB,QAASA,CAAW"}
