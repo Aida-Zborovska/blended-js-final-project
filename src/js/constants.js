@@ -16,3 +16,7 @@ export const COUNTER = {
   cart: 0,
   wishlist: 0,
 };
+export const THEME = {
+  light: 'light',
+  dark: 'dark',
+};

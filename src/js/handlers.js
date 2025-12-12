@@ -1,4 +1,4 @@
-import { STATE } from './constants';
+import { STATE, THEME } from './constants';
 import {
   clearActiveCategory,
   clearProductsList,
@@ -11,8 +11,12 @@ import { getCategories, getProductById } from './products-api';
 import { openModal } from './modal';
 import { refs } from './refs';
 import { renderCategories, renderProduct } from './render-function';
+import { initHeader } from './header';
+import { getThemeFromLS } from './storage';
 
 export async function initHomePage() {
+  initTheme();
+  initHeader();
   try {
     const categories = await getCategories();
     renderCategories(categories);
@@ -84,4 +88,11 @@ export async function handleClearSearchForm() {
 export async function handleLoadMore() {
   STATE.PAGE += 1;
   await loadProducts();
+}
+
+function initTheme() {
+  const theme = getThemeFromLS();
+  document.body.setAttribute('data-theme', theme);
+  document.body.dataset.theme = theme;
+  refs.themeToggleBtn.innerHTML = theme === THEME.light ? '🌙' : '☀️';
 }

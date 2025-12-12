@@ -1,4 +1,4 @@
-import { STATE } from './constants';
+import { STATE, THEME } from './constants';
 
 export const STORAGE_KEY = {
   cart: 'cart',
@@ -6,11 +6,21 @@ export const STORAGE_KEY = {
   theme: 'theme',
 };
 
+export function getThemeFromLS() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY.theme);
+    return data ? JSON.parse(data) : THEME.light;
+  } catch (err) {
+    console.error(`Error getting theme from LocalStorage: ${err}`);
+    return THEME.light;
+  }
+}
+
 export function saveToLS(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (err) {
-    console.error('Error saving to LocalStorage: ${err}');
+    console.error(`Error saving to LocalStorage: ${err}`);
   }
 }
 
@@ -19,7 +29,7 @@ export function loadFromLS(key) {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : [];
   } catch (err) {
-    console.error('Error loading from LocalStorage: ${err}');
+    console.error(`Error loading from LocalStorage: ${err}`);
     return [];
   }
 }
@@ -45,6 +55,6 @@ export function removeProductFromLS(key) {
   if (productIndex === -1) {
     return;
   }
-  data.splice(productIndex, 1);
-  saveToLS(key, data);
+  const newData = data.filter(index => index !== data[productIndex]);
+  saveToLS(key, newData);
 }

@@ -10,4 +10,7 @@ export const refs = {
   clearSearchFormBtn: document.querySelector('.search-form__btn-clear'),
   addToCardBtn: document.querySelector('.modal-product__btn--cart'),
   addToWishlistBtn: document.querySelector('.modal-product__btn--wishlist'),
+  cartCounter: document.querySelector('[data-cart-count]'),
+  wishlistCounter: document.querySelector('[data-wishlist-count]'),
+  themeToggleBtn: document.querySelector('.theme-toggle-btn'),
 };

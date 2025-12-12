@@ -1,4 +1,5 @@
 import { STATE } from './constants';
+import { updateHeaderCounterCart, updateHeaderCounterWishlist } from './header';
 import { refs } from './refs';
 import {
   addProductToLS,
@@ -14,17 +15,6 @@ const BTN_TEXT = {
   removeFromWishlist: 'Remove from Wishlist',
 };
 
-// Додавання товарів у кошик.
-//коли відкрите модальне вікно з продуктом, клік в кнопку Add to Cart додає ID продукту до масиву
-//  і записує в localStorage (ключ cart), кнопка змінює текстовий контент на Remove from Cart.
-// при відкритті модального вікна, потрібно перевірити, чи є ID відкритого продукту в масиві кошику -
-// якщо є, текстовий контент кнопки повинен змінитись на Remove from cart . Якщо товар відсутній - кнопка
-// має текстовий контент Add to cart
-// 2. Видалення товарів з кошику.
-// клік в кнопку Remove from cart видаляє ID відкритого в модальному вікні продукту з масиву кошика і
-// перезаписує в localStorage (ключ cart)
-// 3. Оновлення кількості продуктів
-//при додаванні або видаленні продуктів в card потрібно оновлювати в навігації кількість продуктів - span.nav__count
 refs.addToCardBtn.addEventListener('click', handleCartBtnClick);
 refs.addToWishlistBtn.addEventListener('click', handleWishlistBtnClick);
 
@@ -54,6 +44,7 @@ function handleCartBtnClick(e) {
     removeProductFromLS(STORAGE_KEY.cart);
     btnElem.textContent = BTN_TEXT.addToCart;
   }
+  updateHeaderCounterCart();
 }
 
 function handleWishlistBtnClick(e) {
@@ -65,6 +56,7 @@ function handleWishlistBtnClick(e) {
     removeProductFromLS(STORAGE_KEY.wishlist);
     btnElem.textContent = BTN_TEXT.addToWishlist;
   }
+  updateHeaderCounterWishlist();
 }
 
 function handleEscapePress(e) {
