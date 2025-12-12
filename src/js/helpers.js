@@ -1,11 +1,13 @@
 import { PER_PAGE, STATE } from './constants';
 import {
   getAllProducts,
+  getProductById,
   getProductsByCategory,
   getProductsBySearch,
 } from './products-api';
 import { refs } from './refs';
 import { renderProducts } from './render-function';
+import { loadFromLS } from './storage';
 
 export async function loadProducts() {
   try {
@@ -76,4 +78,15 @@ export function hideNotFoundBlock() {
 
 export function hideLoadMore() {
   refs.loadMoreBtn.classList.add('is-hidden');
+}
+
+export async function loadAllProductsFromLS(key) {
+  const data = loadFromLS(key);
+  const allPromises = await Promise.allSettled(
+    data.map(id => getProductById(id))
+  );
+  const allProducts = allPromises
+    .filter(promis => promis.status === 'fulfilled')
+    .map(promis => promis.value);
+  renderProducts(allProducts);
 }

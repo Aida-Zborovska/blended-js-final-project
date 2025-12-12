@@ -2,6 +2,7 @@ import { STATE, THEME } from './constants';
 import {
   clearActiveCategory,
   clearProductsList,
+  loadAllProductsFromLS,
   hideLoadMore,
   hideNotFoundBlock,
   loadProducts,
@@ -12,7 +13,7 @@ import { openModal } from './modal';
 import { refs } from './refs';
 import { renderCategories, renderProduct } from './render-function';
 import { initHeader } from './header';
-import { getThemeFromLS } from './storage';
+import { STORAGE_KEY, getThemeFromLS } from './storage';
 
 export async function initHomePage() {
   initTheme();
@@ -24,6 +25,17 @@ export async function initHomePage() {
     console.error(`Get categories error: ${err}`);
   }
   await loadProducts();
+}
+
+export async function initWishlistPage() {
+  initTheme();
+  initHeader();
+  loadAllProductsFromLS(STORAGE_KEY.wishlist);
+}
+
+export async function initCartPage() {
+  initTheme();
+  initHeader();
 }
 
 export async function handleCategoryClick(e) {
